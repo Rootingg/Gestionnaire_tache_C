@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct {
     int idtache;
@@ -32,14 +33,9 @@ void supprimerTache(Tache liste[], int *nbTaches, int idASupprimer) {
 }
 
 int main() {
-    int capacite = 100;  // Capacité initiale du tableau
-    Tache *liste = (Tache *)malloc(capacite * sizeof(Tache));  // Allocation dynamique
-    if (liste == NULL) {
-        printf("Erreur d'allocation mémoire.\n");
-        return 1;
-    }
+    Tache liste[100]; 
 
-    int nbTaches = 1;
+    int nbTaches = 0;
     int choix;
 
     while (1) { 
@@ -53,12 +49,16 @@ int main() {
 
         switch (choix) {
             case 1:
-                liste[nbTaches].idtache = nbTaches;
-                printf("Entrez la description de la tâche : \n");
-                scanf(" %[^\n]s", liste[nbTaches].description);
-                printf("Entrez la date de fin de la tâche : \n");
-                scanf(" %[^\n]s", liste[nbTaches].date_fin);
-                nbTaches++;
+                if (nbTaches < capacite){
+                    liste[nbTaches].idtache = nbTaches;
+                    printf("Entrez la description de la tâche : \n");
+                    scanf(" %499[^\n]", liste[nbTaches].description);
+                    printf("Entrez la date de fin de la tâche : \n");
+                    scanf(" %499[^\n]", liste[nbTaches].date_fin);
+                    nbTaches++;
+                }else{
+                    printf("Vous avez atteint la limite maximale de 100 tâches. Impossible d'ajouter une nouvelle tâche.\n");
+                }
                 break;
             case 2:
                 /* code */
@@ -68,7 +68,7 @@ int main() {
                 supprimerTache(liste, &nbTaches, idASupprimer);
                 break;
             case 3:
-                for (int i = 1; i < nbTaches; i++)
+                for (int i = 0; i < nbTaches; i++)
                     afficherTaches(liste[i]);
                 break;
             case 4:
