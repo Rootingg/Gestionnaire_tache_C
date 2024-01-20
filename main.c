@@ -78,6 +78,5 @@ int main() {
         }
         
     }
-    free(liste);
     return 0;
 }
